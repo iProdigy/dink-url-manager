@@ -1,0 +1,26 @@
+{
+  "name": "dink-url-manager",
+  "version": "1.0.0",
+  "description": "Discord webhook filtering proxy for DinkPlugin with allowlist/denylist support",
+  "type": "module",
+  "main": "src/worker.tsx",
+  "scripts": {
+    "dev": "wrangler dev",
+    "build": "vite build",
+    "deploy": "wrangler deploy",
+    "migrate": "wrangler d1 migrations apply DB --remote"
+  },
+  "dependencies": {
+    "hono": "^4.12.16"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.35.0",
+    "@hono/vite-dev-server": "^0.25.0",
+    "typescript": "^5.9.3",
+    "vite": "^6.4.2",
+    "wrangler": "^4.87.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
