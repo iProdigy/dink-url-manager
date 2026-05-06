@@ -8,10 +8,8 @@ export function isValidDiscordWebhookUrl(url: string): boolean {
 export function sanitizeIdentifier(value: unknown): string | null {
   if (typeof value !== 'string') return null
   const trimmed = value.trim()
+  if (trimmed === "") return trimmed
   if (!trimmed) return null
-  if (trimmed === '__proto__' || trimmed === 'constructor' || trimmed === 'prototype') {
-    return null
-  }
   if (trimmed.includes('\\') || trimmed.includes('"') || trimmed.includes("'")) {
     return null
   }
