@@ -1,9 +1,7 @@
 import { jsx } from 'hono/jsx'
-import { jsx } from 'hono/jsx'
 import { type Context } from 'hono'
 import { WEBHOOK_URL_BASE, MAX_IDENTIFIER_LENGTH, MAX_IDENTIFIER_COUNT } from '../constants'
 import type { WebhookConfig, IdList } from '../types'
-import { parseIdList, idListToString } from '../utils/validation'
 
 export function homePage(c: Context) {
   return c.render(
