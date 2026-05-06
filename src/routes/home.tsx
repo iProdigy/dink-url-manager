@@ -125,7 +125,7 @@ export function settingsPage(
           </select>
           <small>
             <strong>Allow mode:</strong> Only dink account hashes (obtained via the <code>::DinkHash</code> command in-game) in the list will be forwarded.<br />
-            <strong>Deny mode:</strong> Player names (case-sensitive) in the list will be blocked; all others forwarded.
+            <strong>Deny mode:</strong> Player names (case-insensitive) in the list will be blocked; all others forwarded.
           </small>
         </div>
 

@@ -27,7 +27,7 @@ This service sits between DinkPlugin and Discord, letting you control which play
 |-------|-------------|
 | **Discord Webhook URL** | The webhook URL from your Discord channel settings |
 | **Filter Mode** | `allow` — only listed players are forwarded.<br>`deny` — all players except listed ones are forwarded |
-| **Identifiers** | One identifier per line. For allow mode: dink account hashes (found in-game with `::DinkHash`). For deny mode: exact player names (case-sensitive). Maximum 1024 players. |
+| **Identifiers** | One identifier per line. For allow mode: dink account hashes (found in-game with `::DinkHash`). For deny mode: player names. Matching is case-insensitive. Maximum 1024 players. |
 
 ### Connect DinkPlugin
 
@@ -59,7 +59,7 @@ Messages that don't pass the filter are silently dropped.
 **Filtering doesn't seem to work**
 
 - For allow mode: confirm you've added the player's dink account hash (not their username)
-- For deny mode: confirm you've added the exact player name (case-sensitive)
+- For deny mode: confirm you've added the player's name (case-insensitive)
 
 
 **Lost your secret?**

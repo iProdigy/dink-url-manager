@@ -4,7 +4,7 @@ import { jsonError } from '../utils/db'
 import type { WebhookPayload } from '../types'
 
 export async function webhookRoute(c: Context) {
-  const hash = c.req.param('hash')
+  const secretHash = c.req.param('hash')
   const contentType = c.req.header('Content-Type') || ''
 
   let payload: WebhookPayload
@@ -53,7 +53,7 @@ export async function webhookRoute(c: Context) {
         OR
         (mode = 'deny' AND json_extract(id_list, '$."' || ? || '"') IS NULL)
       )
-  `).bind(hash, cleanHash, cleanName).run()
+  `).bind(secretHash, cleanHash.toUpperCase(), cleanName.toUpperCase()).run()
 
   if (results.length === 0) {
     return c.json({ status: 'filtered' })

@@ -30,5 +30,5 @@ export function parseIdList(idListStr: string | null): import('../types').IdList
 }
 
 export function idListToString(idList: import('../types').IdList): string {
-  return Object.keys(idList).join('\n')
+  return Object.keys(idList).map(k => k.toLowerCase()).join('\n')
 }

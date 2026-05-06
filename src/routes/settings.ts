@@ -52,8 +52,8 @@ export async function settingsApiRoute(c: Context) {
 
   const idListArray = idListRaw
     .split('\n')
-    .map(s => s.trim())
-    .filter(Boolean)
+    .map(s => sanitizeIdentifier(s))
+    .filter(s => s !== "")
 
   if (idListArray.length > MAX_IDENTIFIER_COUNT) {
     return jsonError(c, `Too many identifiers. Maximum is ${MAX_IDENTIFIER_COUNT}`, 400)
@@ -61,13 +61,13 @@ export async function settingsApiRoute(c: Context) {
 
   const idListObj: IdList = {}
   for (const rawId of idListArray) {
-    if (rawId.length > MAX_IDENTIFIER_LENGTH) {
-      return jsonError(c, `Identifier too long (max ${MAX_IDENTIFIER_LENGTH} chars): "${rawId.substring(0, 32)}..."`, 400)
-    }
-    if (!sanitizeIdentifier(rawId)) {
+    if (!rawId) {
       return jsonError(c, 'Invalid identifier', 400)
     }
-    idListObj[rawId] = true
+    if (rawId.length > MAX_IDENTIFIER_LENGTH) {
+      return jsonError(c, `Identifier too long (max ${MAX_IDENTIFIER_LENGTH} chars): "${rawId.substring(0, MAX_IDENTIFIER_LENGTH / 2)}..."`, 400)
+    }
+    idListObj[rawId.toUpperCase()] = true
   }
 
   try {
