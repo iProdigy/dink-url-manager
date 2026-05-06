@@ -22,4 +22,8 @@ export interface JsonResponse {
 
 export type Bindings = {
   DB: D1Database
+  CONFIG_CREATE_RATELIMIT: RateLimit
+  CONFIG_UPDATE_RATELIMIT: RateLimit
+  WEBHOOK_SECRET_RATELIMIT: RateLimit
+  WEBHOOK_IP_RATELIMIT: RateLimit
 }

@@ -1,6 +1,6 @@
 import { type Context } from 'hono'
 import { sha256 } from '../utils/crypto'
-import { getConfigByHash, jsonError } from '../utils/db'
+import { getConfigByHash, jsonError, getClientIP, checkRateLimit } from '../utils/db'
 import { parseIdList, idListToString, sanitizeIdentifier, isValidDiscordWebhookUrl } from '../utils/validation'
 import { MAX_IDENTIFIER_LENGTH, MAX_IDENTIFIER_COUNT } from '../constants'
 import type { IdList } from '../types'
@@ -20,6 +20,11 @@ export async function settingsPageRoute(c: Context) {
 }
 
 export async function settingsApiRoute(c: Context) {
+  const allowed = await checkRateLimit(c.env.CONFIG_UPDATE_RATELIMIT, getClientIP(c))
+  if (!allowed) {
+    return jsonError(c, 'Rate limit exceeded: configuration update frequency', 429)
+  }
+
   const body = await c.req.parseBody()
   const secret = body.secret as string
   const webhookUrl = body.webhook_url as string
