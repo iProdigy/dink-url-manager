@@ -1,13 +1,13 @@
 # DinkPlugin Webhook Filter
 
-A simple proxy service that filters Discord webhook messages from DinkPlugin based on player allowlists and denylists.
+A simple proxy service that filters Discord webhook messages from [DinkPlugin](https://github.com/pajlads/DinkPlugin) based on player allowlists and denylists.
 
 ## What It Does
 
 This service sits between DinkPlugin and Discord, letting you control which players' messages get posted to your Discord channel. You can:
 
-- **Allowlist mode**: Only players with specific dink account hashes are forwarded (recommended; more secure)
-- **Denylist mode**: All players except those with specific names are forwarded (simpler; easier to bypass)
+- **Allowlist mode**: Only players with specific dink account hashes or player names are forwarded (recommended; more secure)
+- **Denylist mode**: All players except those with specific names or account hashes are forwarded (simpler; easier to bypass)
 
 ## Setup Guide
 
@@ -27,7 +27,7 @@ This service sits between DinkPlugin and Discord, letting you control which play
 |-------|-------------|
 | **Discord Webhook URL** | The webhook URL from your Discord channel settings |
 | **Filter Mode** | `allow` — only listed players are forwarded.<br>`deny` — all players except listed ones are forwarded |
-| **Identifiers** | One identifier per line. For allow mode: dink account hashes (found in-game with `::DinkHash`). For deny mode: player names. Matching is case-insensitive. Maximum 1024 players. |
+| **Identifiers** | One identifier per line. You can include both dink account hashes (from `::DinkHash`) and player names in the same list. Matching is case-insensitive. Maximum: 1024 players. |
 
 ### Connect DinkPlugin
 
@@ -37,16 +37,19 @@ In your DinkPlugin configuration, set the webhook URL to:
 https://dink-url-manager.gitprodigy.workers.dev/webhook/GENERATED_SECRET_HASH
 ```
 
-That's it — DinkPlugin will now send messages through your filter automatically.
+That's it; DinkPlugin will now send messages through your filter automatically.
 
 ## How Filtering Works
 
 When DinkPlugin sends a message, the service checks it against your list:
 
-- **Allow mode**: The message is forwarded only if the player's dink account hash is in your list
-- **Deny mode**: The message is forwarded unless the player's name is in your list
+- **Allow mode**: The message is forwarded if the player's dink account hash **or** player name appears in your list
+- **Deny mode**: The message is forwarded only if **neither** the player's dink account hash **nor** the player name appears in your list
 
 Messages that don't pass the filter are silently dropped.
+
+**Note**: Your identifier list can contain a mix of dink account hashes and player names simultaneously.
+The most secure option is to solely use an allowlist of account hashes.
 
 ## Troubleshooting
 
@@ -58,8 +61,8 @@ Messages that don't pass the filter are silently dropped.
 
 **Filtering doesn't seem to work**
 
-- For allow mode: confirm you've added the player's dink account hash (not their username)
-- For deny mode: confirm you've added the player's name (case-insensitive)
+- For allow mode: confirm the player's dink account hash or name is listed
+- For deny mode: confirm the player's dink account hash and name is not listed
 
 
 **Lost your secret?**

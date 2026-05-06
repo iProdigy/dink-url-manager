@@ -9,12 +9,12 @@ export function homePage(c: Context) {
   return c.render(
     <div>
       <h1>DinkPlugin Webhook Filter</h1>
-      <p>
-        This service filters Discord webhook notifications from DinkPlugin.
-        Allowlist mode matches on dink account hashes (::DinkHash).
-        Denylist mode matches on player names.
-        Configure to control which notifications reach your Discord server.
-      </p>
+       <p>
+         This service filters Discord webhook notifications from <a href="https://runelite.net/plugin-hub/show/dink">DinkPlugin</a>.
+         Allowlist mode forwards players whose dink account hash or name appears in the list.
+         Denylist mode blocks players whose dink account hash or name appears in the list.
+         Configure to control which notifications reach your Discord server.
+       </p>
       <div class="field">
         <a href="/new" class="button-link">
           <button>Create New Webhook Filter</button>
@@ -49,9 +49,9 @@ export function homePage(c: Context) {
       <h2>How It Works</h2>
       <p>
         1. <strong>Create</strong> a new webhook configuration (generates a secret key).<br />
-        2. <strong>Configure</strong> your Discord webhook URL, identifier list (dink hashes for allowlist, player names for denylist), and mode.<br />
-        3. <strong>Set</strong> the generated webhook URL in your DinkPlugin.<br />
-        4. <strong>Filter</strong> incoming webhooks to only forward notifications to Discord that match the specified configuration; others are silently dropped.
+        2. <strong>Configure</strong> your Discord webhook URL, identifier list (dink hashes and/or player names), and mode (allowlist or denylist).<br />
+        3. <strong>Set</strong> the generated webhook URL in your DinkPlugin configuration.<br />
+        4. <strong>Filter</strong> incoming webhooks to only forward notifications to Discord that match the specified configuration; others are silently dropped by this service.
       </p>
       <h2>Security</h2>
       <p>
@@ -116,17 +116,17 @@ export function settingsPage(
         <div class="field">
           <label htmlFor="mode">Filter Mode</label>
           <select id="mode" name="mode">
-            <option value="allow" selected={config.mode === 'allow'}>
-              Allow only these dink account hashes (allowlist; more secure)
-            </option>
-            <option value="deny" selected={config.mode === 'deny'}>
-              Deny these player names (denylist; easier)
-            </option>
+             <option value="allow" selected={config.mode === 'allow'}>
+               Allow matching identifiers (allowlist; more secure)
+             </option>
+             <option value="deny" selected={config.mode === 'deny'}>
+               Deny matching identifiers (denylist; easier)
+             </option>
           </select>
-          <small>
-            <strong>Allow mode:</strong> Only dink account hashes (obtained via the <code>::DinkHash</code> command in-game) in the list will be forwarded.<br />
-            <strong>Deny mode:</strong> Player names (case-insensitive) in the list will be blocked; all others forwarded.
-          </small>
+           <small>
+             <strong>Allow mode:</strong> Forwarded if the player's dink account hash <strong>or</strong> the player name appears in the list (case-insensitive).<br />
+             <strong>Deny mode:</strong> Forwarded only if <strong>neither</strong> the player's dink account hash <strong>nor</strong> the player name appears in the list (case-insensitive).
+           </small>
         </div>
 
         <div class="field">

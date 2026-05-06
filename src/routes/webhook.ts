@@ -49,11 +49,19 @@ export async function webhookRoute(c: Context) {
     FROM webhook_configs
     WHERE secret_hash = ?
       AND (
-        (mode = 'allow' AND json_extract(id_list, '$."' || ? || '"') IS NOT NULL)
+        (mode = 'allow' AND (
+          json_extract(id_list, '$."' || ? || '"') IS NOT NULL
+          OR
+          json_extract(id_list, '$."' || ? || '"') IS NOT NULL
+         ))
         OR
-        (mode = 'deny' AND json_extract(id_list, '$."' || ? || '"') IS NULL)
+        (mode = 'deny' AND (
+          json_extract(id_list, '$."' || ? || '"') IS NULL
+          AND
+          json_extract(id_list, '$."' || ? || '"') IS NULL
+        ))
       )
-  `).bind(secretHash, cleanHash.toUpperCase(), cleanName.toUpperCase()).run()
+  `).bind(secretHash, cleanHash.toUpperCase(), cleanName.toUpperCase(), cleanHash.toUpperCase(), cleanName.toUpperCase()).run()
 
   if (results.length === 0) {
     return c.json({ status: 'filtered' })
