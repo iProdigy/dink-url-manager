@@ -199,15 +199,22 @@ export const globalStyles = css`
       position: absolute;
       left: 0;
       top: 0;
-      display: none;
       z-index: 1;
     }
 
-    .secret-wrapper:hover .secret-censored {
-      visibility: hidden;
+    .secret-wrapper.secret-censored-state .secret-censored {
+      display: block;
     }
 
-    .secret-wrapper:hover .secret-plain {
+    .secret-wrapper.secret-censored-state .secret-plain {
+      display: none;
+    }
+
+    .secret-wrapper.secret-revealed .secret-censored {
+      display: none;
+    }
+
+    .secret-wrapper.secret-revealed .secret-plain {
       display: block;
     }
 
@@ -261,6 +268,24 @@ export const globalStyles = css`
 
     .copy-button.copied {
       background: #28a745;
+    }
+
+    .reveal-button {
+      background: #17a2b8;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      margin-left: 8px;
+      transition: background 0.2s;
+      min-width: 91px;
+      min-height: 60px;
+    }
+
+    .reveal-button:hover {
+      background: #138496;
     }
 
     .copy-wrapper {

@@ -77,7 +77,7 @@ export function settingsPage(
         <label><strong>Secret Key</strong></label>
         <div class="secret-container">
           <div class="copy-wrapper">
-            <div class="secret-wrapper" style="flex: 1;">
+            <div class="secret-wrapper secret-censored-state" id="secret-wrapper">
               <code class="secret-censored">
                 ••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
               </code>
@@ -86,10 +86,13 @@ export function settingsPage(
             <button class="copy-button" data-copy-target="secret-text" onclick="copyToClipboard('secret-text', this)">
               Copy
             </button>
+            <button class="reveal-button" id="reveal-btn" onclick="toggleSecret()">
+              Reveal
+            </button>
           </div>
         </div>
         <small class="small-error">
-          <strong>Treat this key as a password; it is required to modify the configuration below and we cannot provide it if lost.</strong> Hover over the censored text to reveal it. Copy and save it somewhere safe (or bookmark this page).
+          <strong>Treat this key as a password; it is required to modify the configuration below and we cannot provide it if lost.</strong> Click the Reveal button to show the secret. Copy and save it somewhere safe (or bookmark this page).
         </small>
       </div>
 
@@ -197,6 +200,19 @@ export function settingsPage(
                 setTimeout(() => {
                   button.textContent = 'Copy';
                 }, 2000);
+              }
+            }
+            function toggleSecret() {
+              const wrapper = document.getElementById('secret-wrapper');
+              const btn = document.getElementById('reveal-btn');
+              if (wrapper.classList.contains('secret-revealed')) {
+                wrapper.classList.remove('secret-revealed');
+                wrapper.classList.add('secret-censored-state');
+                btn.textContent = 'Reveal';
+              } else {
+                wrapper.classList.remove('secret-censored-state');
+                wrapper.classList.add('secret-revealed');
+                btn.textContent = 'Hide';
               }
             }
           `
