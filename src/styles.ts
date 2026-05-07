@@ -93,6 +93,14 @@ export const globalStyles = css`
       font-family: monospace;
     }
 
+    a {
+      color: #c71585;
+    }
+
+    a:hover {
+      color: #a0126a;
+    }
+
     button {
       background: #c71585;
       color: white;
@@ -186,20 +194,8 @@ export const globalStyles = css`
       width: 100%;
       word-break: break-all;
       font-size: 0.75rem;
-    }
-
-    .secret-censored {
       background: #f8f9fa;
       border: 1px solid #e9ecef;
-    }
-
-    .secret-plain {
-      background: #fff3cd;
-      border: 1px solid #ffeaa7;
-      position: absolute;
-      left: 0;
-      top: 0;
-      z-index: 1;
     }
 
     .secret-wrapper.secret-censored-state .secret-censored {
