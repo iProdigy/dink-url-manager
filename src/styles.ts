@@ -12,7 +12,7 @@ export const globalStyles = css`
       font-family: system-ui, -apple-system, sans-serif;
       line-height: 1.6;
       color: #333;
-      max-width: 800px;
+      max-width: 65em;
       margin: 0 auto;
       padding: 20px;
       background: #f5f5f5;
@@ -254,8 +254,8 @@ export const globalStyles = css`
       font-size: 0.9rem;
       margin-left: 8px;
       transition: background 0.2s;
-      min-width: 91px;
-      min-height: 60px;
+      min-width: 84px;
+      min-height: 40px;
     }
 
     .copy-button:hover {
@@ -276,8 +276,8 @@ export const globalStyles = css`
       font-size: 0.9rem;
       margin-left: 8px;
       transition: background 0.2s;
-      min-width: 91px;
-      min-height: 60px;
+      min-width: 84px;
+      min-height: 40px;
     }
 
     .reveal-button:hover {
